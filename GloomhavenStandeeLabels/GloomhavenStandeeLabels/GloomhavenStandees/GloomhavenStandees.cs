@@ -13,14 +13,13 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             var normalStandeeContainers = GloomhavenStandeeDataAccess.GetStandardStandeeContainers();
             var bossStandeeContainers = GloomhavenStandeeDataAccess.GetBossStandeeContainers();
-            //TODO: Boss standees
             var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
             //var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "HTOWERT.TTF");
             //TODO: Try different fonts
             var boldFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arialbd.ttf");
             var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             var boldBaseFont = BaseFont.CreateFont(boldFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            var drawActionRectangles = normalStandeeContainers
+            var normalStandeeLabels = normalStandeeContainers
                 .Select(container =>
                 {
                     var containerLabel = new Action<PdfContentByte, Rectangle>((canvas, rectangle) =>
@@ -38,7 +37,26 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                 })
                 .SelectMany(actions => actions)
                 .ToList();
-            var drawActionRectangleQueue = new Queue<Action<PdfContentByte, Rectangle>>(drawActionRectangles);
+            var bossStandeeLabels = bossStandeeContainers
+                .Select(container =>
+                {
+                    var containerLabel = new Action<PdfContentByte, Rectangle>((canvas, rectangle) =>
+                    {
+                        //TODO: Add container labels here
+                    });
+                    var standeeGroupLabels = container.StandeeGroups
+                        .SelectMany(standeeGroup =>
+                        {
+                            var nameWithImageAction = GetNameWithImageActionForStandeeGroup(standeeGroup, baseFont);
+                            var justImageAction = GetImageActionForStandeeGroup(standeeGroup);
+                            return new[] { nameWithImageAction, justImageAction };
+                        });
+                    return new[] { containerLabel }.Concat(standeeGroupLabels).ToList();
+                })
+                .SelectMany(actions => actions)
+                .ToList();
+            var allActions = normalStandeeLabels.Concat(bossStandeeLabels).ToList();
+            var drawActionRectangleQueue = new Queue<Action<PdfContentByte, Rectangle>>(allActions);
             var outputPath = PdfGenerator.DrawRectangles(drawActionRectangleQueue, BaseColor.WHITE, "Gloomhaven", drawBorders);
             PdfGenerator.StampPdfWithTemplate(outputPath);
 
@@ -48,17 +66,23 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             return (canvas, rectangle) =>
             {
-                var standees = standeeGroup.Standees.ToList();
+                var padding = 2f;
+                var paddedRectangle = new Rectangle(
+                    rectangle.Left + padding,
+                    rectangle.Bottom + padding,
+                    rectangle.Right - (padding * 2),
+                    rectangle.Top - (padding * 2));
+                var standees = standeeGroup.Standees.Reverse().ToList();
                 switch (standees.Count)
                 {
                     case 1:
-                        DrawSingleStandeeImage(canvas, rectangle, standees);
+                        DrawSingleStandeeImage(canvas, paddedRectangle, standees);
                         break;
                     case 2:
-                        DrawDoubleStandeeImage(canvas, rectangle, standees);
+                        DrawDoubleStandeeImage(canvas, paddedRectangle, standees);
                         break;
                     case 3:
-                        DrawTripleStandeeImage(canvas, rectangle, standees);
+                        DrawTripleStandeeImage(canvas, paddedRectangle, standees);
                         break;
                 }
             };
@@ -68,17 +92,23 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             return (canvas, rectangle) =>
             {
+                var padding = 2f;
+                var paddedRectangle = new Rectangle(
+                    rectangle.Left + padding,
+                    rectangle.Bottom + padding,
+                    rectangle.Right - (padding * 2),
+                    rectangle.Top - (padding * 2));
                 var standees = standeeGroup.Standees.ToList();
                 switch (standees.Count)
                 {
                     case 1:
-                        DrawSingleStandeeNameWithImage(canvas, rectangle, standees, baseFont);
+                        DrawSingleStandeeNameWithImage(canvas, paddedRectangle, standees, baseFont);
                         break;
                     case 2:
-                        DrawDoubleStandeeNameWithImage(canvas, rectangle, standees, baseFont);
+                        DrawDoubleStandeeNameWithImage(canvas, paddedRectangle, standees, baseFont);
                         break;
                     case 3:
-                        DrawTripleStandeeNameWithImage(canvas, rectangle, standees, baseFont);
+                        DrawTripleStandeeNameWithImage(canvas, paddedRectangle, standees, baseFont);
                         break;
                 }
             };
@@ -101,9 +131,9 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                 rectangle.Bottom,
                 rectangle.Right,
                 rectangle.Top);
-            DrawNormalStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
-            DrawNormalStandeeImage(middleRectangle, standees[1].DisplayName, canvas, true);
-            DrawNormalStandeeImage(leftRectangle, standees[2].DisplayName, canvas, true);
+            DrawStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
+            DrawStandeeImage(middleRectangle, standees[1].DisplayName, canvas, true);
+            DrawStandeeImage(leftRectangle, standees[2].DisplayName, canvas, true);
         }
 
         private static void DrawDoubleStandeeImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees)
@@ -118,13 +148,13 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                 rectangle.Bottom,
                 rectangle.Right,
                 rectangle.Top);
-            DrawNormalStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
-            DrawNormalStandeeImage(leftRectangle, standees[1].DisplayName, canvas, true);
+            DrawStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
+            DrawStandeeImage(leftRectangle, standees[1].DisplayName, canvas, true);
         }
 
         private static void DrawSingleStandeeImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees)
         {
-            DrawNormalStandeeImage(rectangle, standees[0].DisplayName, canvas, true);
+            DrawStandeeImage(rectangle, standees[0].DisplayName, canvas, true);
         }
 
         private static void DrawTripleStandeeNameWithImage(
@@ -158,20 +188,20 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                 imagesRectangle.Bottom,
                 imagesRectangle.Right,
                 imagesRectangle.Top);
-            DrawNormalStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
-            DrawNormalStandeeImage(middleRectangle, standees[1].DisplayName, canvas, true);
-            DrawNormalStandeeImage(leftRectangle, standees[2].DisplayName, canvas, true);
+            DrawStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
+            DrawStandeeImage(middleRectangle, standees[1].DisplayName, canvas, true);
+            DrawStandeeImage(leftRectangle, standees[2].DisplayName, canvas, true);
 
             var firstDisplayName = standees[0].DisplayName;
-            DrawNormalStandeeImage(rightRectangle, firstDisplayName, canvas, true);
+            DrawStandeeImage(rightRectangle, firstDisplayName, canvas, true);
             var firstLineFontSize = GetFontSize(textRectangle, firstDisplayName, canvas, baseFont, 0);
 
             var secondDisplayName = standees[1].DisplayName;
-            DrawNormalStandeeImage(leftRectangle, secondDisplayName, canvas, true);
+            DrawStandeeImage(leftRectangle, secondDisplayName, canvas, true);
             var secondLineFontSize = GetFontSize(textRectangle, secondDisplayName, canvas, baseFont, 0);
 
             var thirdDisplayName = standees[2].DisplayName;
-            DrawNormalStandeeImage(leftRectangle, thirdDisplayName, canvas, true);
+            DrawStandeeImage(leftRectangle, thirdDisplayName, canvas, true);
             var thirdLineFontSize = GetFontSize(textRectangle, thirdDisplayName, canvas, baseFont, 0);
 
             var fontSize = Math.Min(Math.Min(firstLineFontSize, secondLineFontSize), thirdLineFontSize);
@@ -207,9 +237,9 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                 imagesRectangle.Right,
                 imagesRectangle.Top);
             var firstDisplayName = standees[0].DisplayName;
-            DrawNormalStandeeImage(rightRectangle, firstDisplayName, canvas, true);
+            DrawStandeeImage(rightRectangle, firstDisplayName, canvas, true);
             var secondDisplayName = standees[1].DisplayName;
-            DrawNormalStandeeImage(leftRectangle, secondDisplayName, canvas, true);
+            DrawStandeeImage(leftRectangle, secondDisplayName, canvas, true);
             var firstLineFontSize = GetFontSize(textRectangle, firstDisplayName, canvas, baseFont, 0);
             var secondLineFontSize = GetFontSize(textRectangle, secondDisplayName, canvas, baseFont, 0);
             var fontSize = Math.Min(firstLineFontSize, secondLineFontSize);
@@ -221,22 +251,34 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             var yOffset = rectangle.Height/2;
             var displayName = standees[0].DisplayName;
-            var image = DrawNormalStandeeImage(rectangle, displayName, canvas);
+            var image = DrawStandeeImage(rectangle, displayName, canvas);
             var xOffset = image.ScaledWidth;
             var fontSize = GetFontSize(rectangle, displayName, canvas, baseFont, xOffset);
             DrawCardText(rectangle, displayName, canvas, baseFont, xOffset, yOffset, fontSize);
         }
 
-        private static Image DrawNormalStandeeImage(
+        private static Image DrawStandeeImage(
             Rectangle rectangle,
             string name,
             PdfContentByte canvas,
             bool centerHorizontally = false)
         {
+            var bossImageName = $@"GloomhavenStandees\Images\{name.Replace(' ', '-')}-214x300.jpg";
+            var normalImageName = $@"GloomhavenStandees\Images\Horz-{name}.png";
+            string imageName;
+            if (File.Exists(bossImageName))
+                imageName = bossImageName;
+            else if (File.Exists(normalImageName))
+                imageName = normalImageName;
+            else
+            {
+                throw new InvalidOperationException(name);
+            }
+
             return DrawImage(
                 rectangle,
                 canvas,
-                $@"GloomhavenStandees\Images\Horz-{name}.png",
+                imageName,
                 centerVertically:true,
                 centerHorizontally: centerHorizontally);
         }
