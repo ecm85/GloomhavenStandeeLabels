@@ -55,6 +55,11 @@
     <Compile Include="Dominion\DominionCard.cs" />
     <Compile Include="Dominion\DominionCardDataAccess.cs" />
     <Compile Include="Dominion\DominionLabels.cs" />
+    <Compile Include="GloomhavenStandees\GloomhavenStandeeDataAccess.cs" />
+    <Compile Include="GloomhavenStandees\GloomhavenStandees.cs" />
+    <Compile Include="GloomhavenStandees\Standee.cs" />
+    <Compile Include="GloomhavenStandees\StandeeContainer.cs" />
+    <Compile Include="GloomhavenStandees\StandeeGroup.cs" />
     <Compile Include="PdfGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,6 +87,117 @@
     </Content>
     <Content Include="Avery5167Template.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\BossStandeeData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Ancient Artillery.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Bandit Archer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Bandit Guard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Black Imp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Cave Bear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-City Archer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-City Guard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Cultist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Deep Terror.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Earth Demon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Flame Demon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Forest Imp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Frost Demon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Giant Viper.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Harrower Infester.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Hound.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Inox Archer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Inox Bodyguard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Inox Guard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Inox Shaman.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Living Bones.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Living Corpse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Living Spirit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Lurker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Night Demon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Ooze.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Rending Drake.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Savaas Icestorm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Savaas Lavaflow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Spitting Drake.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Stone Golem.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Sun Demon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Vermling Scout.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Vermling Shaman.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\Images\Horz-Wind Demon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GloomhavenStandees\NormalStandeeData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
   </ItemGroup>

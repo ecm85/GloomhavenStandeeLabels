@@ -90,12 +90,5 @@ namespace GloomhavenStandeeLabels
             canvas.AddImage(image);
             return image;
         }
-
-        public static void WriteNonWrappingTextInRectangle(PdfContentByte canvas, string text, Rectangle rectangle, float textWidthOffset, float textHeightOffset, Font font, int textRotation, int alignment)
-        {
-            ColumnText.ShowTextAligned(canvas, alignment, new Phrase(text, font),
-                rectangle.Left + textWidthOffset, rectangle.Top - textHeightOffset,
-                textRotation);
-        }
     }
 }
