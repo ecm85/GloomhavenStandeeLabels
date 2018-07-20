@@ -14,7 +14,9 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
             var normalStandeeContainers = GloomhavenStandeeDataAccess.GetStandardStandeeContainers();
             var bossStandeeContainers = GloomhavenStandeeDataAccess.GetBossStandeeContainers();
             //TODO: Boss standees
-            var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "HTOWERT.TTF");
+            var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
+            //var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "HTOWERT.TTF");
+            //TODO: Try different fonts
             var boldFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arialbd.ttf");
             var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             var boldBaseFont = BaseFont.CreateFont(boldFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -46,17 +48,17 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             return (canvas, rectangle) =>
             {
-                var standees1 = standeeGroup.Standees.ToList();
-                switch (standees1.Count)
+                var standees = standeeGroup.Standees.ToList();
+                switch (standees.Count)
                 {
                     case 1:
-                        DrawSingleStandeeImage(canvas, rectangle, standees1);
+                        DrawSingleStandeeImage(canvas, rectangle, standees);
                         break;
                     case 2:
-                        DrawDoubleStandeeImage();
+                        DrawDoubleStandeeImage(canvas, rectangle, standees);
                         break;
                     case 3:
-                        DrawTripleStandeeImage();
+                        DrawTripleStandeeImage(canvas, rectangle, standees);
                         break;
                 }
             };
@@ -66,51 +68,163 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             return (canvas, rectangle) =>
             {
-                var standees1 = standeeGroup.Standees.ToList();
-                switch (standees1.Count)
+                var standees = standeeGroup.Standees.ToList();
+                switch (standees.Count)
                 {
                     case 1:
-                        DrawSingleStandeeNameWithImage(canvas, rectangle, standees1, baseFont);
+                        DrawSingleStandeeNameWithImage(canvas, rectangle, standees, baseFont);
                         break;
                     case 2:
-                        DrawDoubleStandeeNameWithImage();
+                        DrawDoubleStandeeNameWithImage(canvas, rectangle, standees, baseFont);
                         break;
                     case 3:
-                        DrawTripleStandeeNameWithImage();
+                        DrawTripleStandeeNameWithImage(canvas, rectangle, standees, baseFont);
                         break;
                 }
             };
         }
 
-        private static void DrawTripleStandeeImage()
+        private static void DrawTripleStandeeImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees)
         {
-            //TODO: do this
+            var leftRectangle = new Rectangle(
+                rectangle.Left,
+                rectangle.Bottom,
+                rectangle.Left + rectangle.Width / 3,
+                rectangle.Top);
+            var middleRectangle = new Rectangle(
+                rectangle.Left + rectangle.Width / 3,
+                rectangle.Bottom,
+                rectangle.Left + 2 * rectangle.Width / 3,
+                rectangle.Top);
+            var rightRectangle = new Rectangle(
+                rectangle.Left + 2 * rectangle.Width / 3,
+                rectangle.Bottom,
+                rectangle.Right,
+                rectangle.Top);
+            DrawNormalStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
+            DrawNormalStandeeImage(middleRectangle, standees[1].DisplayName, canvas, true);
+            DrawNormalStandeeImage(leftRectangle, standees[2].DisplayName, canvas, true);
         }
 
-        private static void DrawDoubleStandeeImage()
+        private static void DrawDoubleStandeeImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees)
         {
-            //TODO: do this
+            var leftRectangle = new Rectangle(
+                rectangle.Left,
+                rectangle.Bottom,
+                rectangle.Left + rectangle.Width/2,
+                rectangle.Top);
+            var rightRectangle = new Rectangle(
+                rectangle.Left + rectangle.Width/2,
+                rectangle.Bottom,
+                rectangle.Right,
+                rectangle.Top);
+            DrawNormalStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
+            DrawNormalStandeeImage(leftRectangle, standees[1].DisplayName, canvas, true);
         }
 
         private static void DrawSingleStandeeImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees)
         {
-            DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas, true);
+            DrawNormalStandeeImage(rectangle, standees[0].DisplayName, canvas, true);
         }
 
-        private static void DrawTripleStandeeNameWithImage()
+        private static void DrawTripleStandeeNameWithImage(
+            PdfContentByte canvas,
+            Rectangle rectangle,
+            List<Standee> standees,
+            BaseFont baseFont)
         {
-            //TODO: do this
+            var imagesRectangle = new Rectangle(
+                rectangle.Left,
+                rectangle.Bottom,
+                rectangle.Left + rectangle.Width * .4f,
+                rectangle.Top);
+            var textRectangle = new Rectangle(
+                rectangle.Left + rectangle.Width * .4f,
+                rectangle.Bottom,
+                rectangle.Right,
+                rectangle.Top);
+            var leftRectangle = new Rectangle(
+                imagesRectangle.Left,
+                imagesRectangle.Bottom,
+                imagesRectangle.Left + imagesRectangle.Width / 3,
+                imagesRectangle.Top);
+            var middleRectangle = new Rectangle(
+                imagesRectangle.Left + imagesRectangle.Width / 3,
+                imagesRectangle.Bottom,
+                imagesRectangle.Left + 2 * imagesRectangle.Width / 3,
+                imagesRectangle.Top);
+            var rightRectangle = new Rectangle(
+                imagesRectangle.Left + 2 * imagesRectangle.Width / 3,
+                imagesRectangle.Bottom,
+                imagesRectangle.Right,
+                imagesRectangle.Top);
+            DrawNormalStandeeImage(rightRectangle, standees[0].DisplayName, canvas, true);
+            DrawNormalStandeeImage(middleRectangle, standees[1].DisplayName, canvas, true);
+            DrawNormalStandeeImage(leftRectangle, standees[2].DisplayName, canvas, true);
+
+            var firstDisplayName = standees[0].DisplayName;
+            DrawNormalStandeeImage(rightRectangle, firstDisplayName, canvas, true);
+            var firstLineFontSize = GetFontSize(textRectangle, firstDisplayName, canvas, baseFont, 0);
+
+            var secondDisplayName = standees[1].DisplayName;
+            DrawNormalStandeeImage(leftRectangle, secondDisplayName, canvas, true);
+            var secondLineFontSize = GetFontSize(textRectangle, secondDisplayName, canvas, baseFont, 0);
+
+            var thirdDisplayName = standees[2].DisplayName;
+            DrawNormalStandeeImage(leftRectangle, thirdDisplayName, canvas, true);
+            var thirdLineFontSize = GetFontSize(textRectangle, thirdDisplayName, canvas, baseFont, 0);
+
+            var fontSize = Math.Min(Math.Min(firstLineFontSize, secondLineFontSize), thirdLineFontSize);
+            DrawCardText(textRectangle, firstDisplayName, canvas, baseFont, 0, (rectangle.Height / 4) - 2f, fontSize);
+            DrawCardText(textRectangle, secondDisplayName, canvas, baseFont, 0, 2 * rectangle.Height / 4, fontSize);
+            DrawCardText(textRectangle, thirdDisplayName, canvas, baseFont, 0, (3 * rectangle.Height / 4) + 2f, fontSize);
         }
 
-        private static void DrawDoubleStandeeNameWithImage()
+        private static void DrawDoubleStandeeNameWithImage(
+            PdfContentByte canvas,
+            Rectangle rectangle,
+            List<Standee> standees,
+            BaseFont baseFont)
         {
-            //TODO: do this
+            var imagesRectangle = new Rectangle(
+                rectangle.Left,
+                rectangle.Bottom,
+                rectangle.Left + rectangle.Width * .4f,
+                rectangle.Top);
+            var textRectangle = new Rectangle(
+                rectangle.Left + rectangle.Width * .4f,
+                rectangle.Bottom,
+                rectangle.Right,
+                rectangle.Top);
+            var leftRectangle = new Rectangle(
+                imagesRectangle.Left,
+                imagesRectangle.Bottom,
+                imagesRectangle.Left + imagesRectangle.Width / 2,
+                imagesRectangle.Top);
+            var rightRectangle = new Rectangle(
+                imagesRectangle.Left + imagesRectangle.Width / 2,
+                imagesRectangle.Bottom,
+                imagesRectangle.Right,
+                imagesRectangle.Top);
+            var firstDisplayName = standees[0].DisplayName;
+            DrawNormalStandeeImage(rightRectangle, firstDisplayName, canvas, true);
+            var secondDisplayName = standees[1].DisplayName;
+            DrawNormalStandeeImage(leftRectangle, secondDisplayName, canvas, true);
+            var firstLineFontSize = GetFontSize(textRectangle, firstDisplayName, canvas, baseFont, 0);
+            var secondLineFontSize = GetFontSize(textRectangle, secondDisplayName, canvas, baseFont, 0);
+            var fontSize = Math.Min(firstLineFontSize, secondLineFontSize);
+            DrawCardText(textRectangle, firstDisplayName, canvas, baseFont, 0, rectangle.Height / 3, fontSize);
+            DrawCardText(textRectangle, secondDisplayName, canvas, baseFont, 0, 2 * rectangle.Height / 3, fontSize);
         }
 
         private static void DrawSingleStandeeNameWithImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees, BaseFont baseFont)
         {
-            var image = DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas);
-            DrawCardText(rectangle, standees.First().DisplayName, canvas, baseFont, image.ScaledWidth, rectangle.Height/2);
+            var yOffset = rectangle.Height/2;
+            var displayName = standees[0].DisplayName;
+            var image = DrawNormalStandeeImage(rectangle, displayName, canvas);
+            var xOffset = image.ScaledWidth;
+            var fontSize = GetFontSize(rectangle, displayName, canvas, baseFont, xOffset);
+            DrawCardText(rectangle, displayName, canvas, baseFont, xOffset, yOffset, fontSize);
         }
 
         private static Image DrawNormalStandeeImage(
@@ -138,7 +252,16 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
             return TextSharpHelpers.DrawImage(rectangle, canvas, imagePath, 0, scaleAbsolute, centerVertically, centerHorizontally);
         }
 
-        private static void DrawCardText(Rectangle rectangle, string name, PdfContentByte canvas, BaseFont baseFont, float xOffset, float yOffset)
+        private static void DrawCardText(Rectangle rectangle, string name, PdfContentByte canvas, BaseFont baseFont, float xOffset, float yOffset, float fontSize)
+        {
+            var font = new Font(baseFont, fontSize, Font.NORMAL, BaseColor.BLACK);
+            const int textRotation = 0;
+            ColumnText.ShowTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(name, font),
+                rectangle.Left + xOffset + 2, rectangle.Bottom + yOffset - 5, textRotation);
+        }
+
+        private static float GetFontSize(Rectangle rectangle, string name, PdfContentByte canvas, BaseFont baseFont,
+            float xOffset)
         {
             const float maxFontSize = 16f;
             var fontSize = TextSharpHelpers.GetFontSize(
@@ -149,10 +272,7 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                 maxFontSize,
                 Element.ALIGN_LEFT,
                 Font.NORMAL);
-            var font = new Font(baseFont, fontSize, Font.NORMAL, BaseColor.BLACK);
-            const int textRotation = 0;
-            ColumnText.ShowTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(name, font),
-                rectangle.Left + xOffset + 2, rectangle.Bottom + yOffset - 5, textRotation);
+            return fontSize;
         }
     }
 }
