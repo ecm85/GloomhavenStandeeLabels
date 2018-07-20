@@ -9,7 +9,7 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
 {
     public static class GloomhavenStandees
     {
-        public static void CreateLabels()
+        public static void CreateLabels(bool drawBorders)
         {
             var normalStandeeContainers = GloomhavenStandeeDataAccess.GetStandardStandeeContainers();
             var bossStandeeContainers = GloomhavenStandeeDataAccess.GetBossStandeeContainers();
@@ -24,7 +24,6 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                     var containerLabel = new Action<PdfContentByte, Rectangle>((canvas, rectangle) =>
                     {
                         //TODO: Add container labels here
-                        TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
                     });
                     var standeeGroupLabels = container.StandeeGroups
                         .SelectMany(standeeGroup =>
@@ -38,7 +37,7 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                 .SelectMany(actions => actions)
                 .ToList();
             var drawActionRectangleQueue = new Queue<Action<PdfContentByte, Rectangle>>(drawActionRectangles);
-            var outputPath = PdfGenerator.DrawRectangles(drawActionRectangleQueue, BaseColor.WHITE, "Gloomhaven");
+            var outputPath = PdfGenerator.DrawRectangles(drawActionRectangleQueue, BaseColor.WHITE, "Gloomhaven", drawBorders);
             PdfGenerator.StampPdfWithTemplate(outputPath);
 
         }
@@ -95,8 +94,6 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
 
         private static void DrawSingleStandeeImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees)
         {
-            //TODO: Clean this up
-            TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
             DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas, true);
         }
 
@@ -112,8 +109,6 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
 
         private static void DrawSingleStandeeNameWithImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees, BaseFont baseFont)
         {
-            //TODO: Clean this up
-            TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
             var image = DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas);
             DrawCardText(rectangle, standees.First().DisplayName, canvas, baseFont, image.ScaledWidth, rectangle.Height/2);
         }

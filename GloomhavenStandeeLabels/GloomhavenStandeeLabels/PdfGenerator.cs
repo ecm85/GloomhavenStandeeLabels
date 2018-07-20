@@ -9,7 +9,11 @@ namespace GloomhavenStandeeLabels
 {
     public static class PdfGenerator
     {
-        public static string DrawRectangles(Queue<Action<PdfContentByte, Rectangle>> drawRectangleActions, BaseColor backgroundColor, string filePrefix)
+        public static string DrawRectangles(
+            Queue<Action<PdfContentByte, Rectangle>> drawRectangleActions,
+            BaseColor backgroundColor,
+            string filePrefix,
+            bool drawBorders = false)
         {
             Directory.CreateDirectory(@"C:\Avery");
             const int maxColumnIndex = 3;
@@ -49,6 +53,10 @@ namespace GloomhavenStandeeLabels
                             var template = canvas.CreateTemplate(rectangle.Width, rectangle.Height);
                             var nextAction = drawRectangleActions.Dequeue();
                             nextAction(template, templateRectangle);
+                            if (drawBorders)
+                            {
+                                TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
+                            }
                             canvas.AddTemplate(template, rectangle.Left, rectangle.Bottom);
                             rowIndex++;
                             if (rowIndex > maxRowIndex)
@@ -77,7 +85,9 @@ namespace GloomhavenStandeeLabels
             var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
             var extension = Path.GetExtension(fileName);
             var resultFileName = $"{fileNameWithoutExtension}WithTemplate{extension}";
-            var result = Path.Combine(directoryName, resultFileName);
+            var result = Path.Combine(
+                directoryName ?? throw new InvalidOperationException(),
+                resultFileName);
 
             var originalReader = new PdfReader(original);
             var backgroundReader = new PdfReader(backgroundPath);
@@ -96,10 +106,14 @@ namespace GloomhavenStandeeLabels
 
         private static float PageWidth => Utilities.InchesToPoints(8.5f);
 
-        private static void AddPage(IDocListener document, PdfContentByte canvas, Rectangle documentRectangle, BaseColor backgroundColor)
+        private static void AddPage(
+            IDocListener document,
+            PdfContentByte canvas,
+            Rectangle documentRectangle,
+            BaseColor backgroundColor)
         {
             document.NewPage();
-            //TextSharpHelpers.DrawRectangle(canvas, documentRectangle, backgroundColor);
+            TextSharpHelpers.DrawRectangle(canvas, documentRectangle, backgroundColor);
         }
     }
 }
