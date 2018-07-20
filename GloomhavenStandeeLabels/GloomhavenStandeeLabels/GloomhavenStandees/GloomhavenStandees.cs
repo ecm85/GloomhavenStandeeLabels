@@ -97,7 +97,7 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             //TODO: Clean this up
             TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
-            DrawNormalStandeeImage(rectangle, standees.First().Name, canvas);
+            DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas);
         }
 
         private static void DrawTripleStandeeNameWithImage()
@@ -114,8 +114,8 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             //TODO: Clean this up
             TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
-            DrawNormalStandeeImage(rectangle, standees.First().Name, canvas);
-            DrawCardText(rectangle, standees.First().Name, canvas, baseFont);
+            DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas);
+            DrawCardText(rectangle, standees.First().DisplayName, canvas, baseFont);
         }
 
         private static void DrawNormalStandeeImage(Rectangle rectangle, string name, PdfContentByte canvas)

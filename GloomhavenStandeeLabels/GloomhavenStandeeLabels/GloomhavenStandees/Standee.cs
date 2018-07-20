@@ -1,8 +1,14 @@
-﻿namespace GloomhavenStandeeLabels.GloomhavenStandees
+﻿using System.Threading;
+using Newtonsoft.Json;
+
+namespace GloomhavenStandeeLabels.GloomhavenStandees
 {
     public class Standee
     {
-        public string Name { get; set; }
+        [JsonProperty]
+        private string Name { get; set; }
         public int StandeeCount { get; set; }
+
+        public string DisplayName => Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Name.ToLower());
     }
 }
