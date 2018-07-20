@@ -1,140 +1,243 @@
 [
-	{
-		"StandeeGroups": [
-			{
-				"Standees": [
-					{"Name": "inox archer", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "bandit archer", "StandeeCount": 6},
-					{"Name": "city archer", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "inox guard", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "bandit guard", "StandeeCount": 6},
-					{"Name": "city guard", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "inox shaman", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "vermling shaman", "StandeeCount": 10}
-				]
-			}
-		]
-	},
-	{
-		"StandeeGroups": [
-			{
-				"Standees": [
-					{"Name": "black imp", "StandeeCount": 10}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "forest imp", "StandeeCount": 10}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "cave bear", "StandeeCount": 4}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "hound", "StandeeCount": 6},
-					{"Name": "giant viper", "StandeeCount": 10}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "savaas icestorm", "StandeeCount": 4},
-					{"Name": "savaas lavaflow", "StandeeCount": 4}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "spitting drake", "StandeeCount": 6},
-					{"Name": "rending drake", "StandeeCount": 6}
-				]
-			}
-		]
-	},
-	{
-		"StandeeGroups": [
-			{
-				"Standees": [
-					{"Name": "lurker", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "deep terror", "StandeeCount": 10}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "stone golem", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "vermling scout", "StandeeCount": 10}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "harrower infester", "StandeeCount": 4},
-					{"Name": "ancient artillery", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "ooze", "StandeeCount": 10}
-				]
-			}
-		]
-	},
-	{
-		"StandeeGroups": [
-			{
-				"Standees": [
-					{"Name": "earth demon", "StandeeCount": 6},
-					{"Name": "flame demon", "StandeeCount": 6},
-					{"Name": "night demon", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "wind demon", "StandeeCount": 6},
-					{"Name": "frost demon", "StandeeCount": 6},
-					{"Name": "sun demon", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "cultist", "StandeeCount": 6},
-					{"Name": "living spirit", "StandeeCount": 6}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "living bones", "StandeeCount": 10},
-					{"Name": "living corpse", "StandeeCount": 6}
-				]
-			}
-		]
-	}
+  {
+    "StandeeGroups": [
+      {
+        "Standees": [
+          {
+            "Name": "inox archer",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "bandit archer",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "city archer",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "inox guard",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "bandit guard",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "city guard",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "inox shaman",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "vermling shaman",
+            "StandeeCount": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "StandeeGroups": [
+      {
+        "Standees": [
+          {
+            "Name": "black imp",
+            "StandeeCount": 10
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "forest imp",
+            "StandeeCount": 10
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "cave bear",
+            "StandeeCount": 4
+          },
+          {
+            "Name": "hound",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "giant viper",
+            "StandeeCount": 10
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "savaas icestorm",
+            "StandeeCount": 4
+          },
+          {
+            "Name": "savaas lavaflow",
+            "StandeeCount": 4
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "spitting drake",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "rending drake",
+            "StandeeCount": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "StandeeGroups": [
+      {
+        "Standees": [
+          {
+            "Name": "lurker",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "deep terror",
+            "StandeeCount": 10
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "stone golem",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "vermling scout",
+            "StandeeCount": 10
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "harrower infester",
+            "StandeeCount": 4
+          },
+          {
+            "Name": "ancient artillery",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "ooze",
+            "StandeeCount": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "StandeeGroups": [
+      {
+        "Standees": [
+          {
+            "Name": "earth demon",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "flame demon",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "night demon",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "wind demon",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "frost demon",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "sun demon",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+
+          {
+            "Name": "living spirit",
+            "StandeeCount": 6
+          },
+          {
+            "Name": "cultist",
+            "StandeeCount": 6
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "living bones",
+            "StandeeCount": 10
+          },
+          {
+            "Name": "living corpse",
+            "StandeeCount": 6
+          }
+        ]
+      }
+    ]
+  }
 ]
