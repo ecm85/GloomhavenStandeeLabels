@@ -1,65 +1,77 @@
 [
   {
-    "StandeeGroups": [
-      {
-        "Standees": [
-          {
-            "Name": "inox archer",
-            "StandeeCount": 6
-          }
-        ]
-      },
-      {
-        "Standees": [
-          {
-            "Name": "bandit archer",
-            "StandeeCount": 6
-          },
-          {
-            "Name": "city archer",
-            "StandeeCount": 6
-          }
-        ]
-      },
-      {
-        "Standees": [
-          {
-            "Name": "inox guard",
-            "StandeeCount": 6
-          }
-        ]
-      },
-      {
-        "Standees": [
-          {
-            "Name": "bandit guard",
-            "StandeeCount": 6
-          },
-          {
-            "Name": "city guard",
-            "StandeeCount": 6
-          }
-        ]
-      },
-      {
-        "Standees": [
-          {
-            "Name": "inox shaman",
-            "StandeeCount": 6
-          }
-        ]
-      },
-      {
-        "Standees": [
-          {
-            "Name": "vermling shaman",
-            "StandeeCount": 10
-          }
-        ]
-      }
-    ]
+    "Description": [
+      "Archers",
+      "Guards",
+      "Shamans"
+    ],
+      "StandeeGroups"
+      :
+      [
+        {
+          "Standees": [
+            {
+              "Name": "inox archer",
+              "StandeeCount": 6
+            }
+          ]
+        },
+        {
+          "Standees": [
+            {
+              "Name": "bandit archer",
+              "StandeeCount": 6
+            },
+            {
+              "Name": "city archer",
+              "StandeeCount": 6
+            }
+          ]
+        },
+        {
+          "Standees": [
+            {
+              "Name": "inox guard",
+              "StandeeCount": 6
+            }
+          ]
+        },
+        {
+          "Standees": [
+            {
+              "Name": "bandit guard",
+              "StandeeCount": 6
+            },
+            {
+              "Name": "city guard",
+              "StandeeCount": 6
+            }
+          ]
+        },
+        {
+          "Standees": [
+            {
+              "Name": "inox shaman",
+              "StandeeCount": 6
+            }
+          ]
+        },
+        {
+          "Standees": [
+            {
+              "Name": "vermling shaman",
+              "StandeeCount": 10
+            }
+          ]
+        }
+      ]
   },
   {
+    "Description": [
+      "Imps",
+      "Beasts",
+      "Drakes/Savaas"
+    ],
     "StandeeGroups": [
       {
         "Standees": [
@@ -124,6 +136,9 @@
     ]
   },
   {
+    "Description": [
+      "Miscellaneous"
+    ],
     "StandeeGroups": [
       {
         "Standees": [
@@ -180,6 +195,10 @@
     ]
   },
   {
+    "Description": [
+      "Demons",
+      "Undead"
+    ],
     "StandeeGroups": [
       {
         "Standees": [

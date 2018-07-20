@@ -1,47 +1,89 @@
 [
-	{
-		"StandeeGroups": [
-			{
-				"Standees": [
-					{"Name": "elder drake", "StandeeCount": 1}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "prime demon", "StandeeCount": 1},
-					{"Name": "captain of the guard", "StandeeCount": 1}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "jekserah", "StandeeCount": 1},
-					{"Name": "dark rider", "StandeeCount": 1}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "winged horror", "StandeeCount": 1},
-					{"Name": "bandit commander", "StandeeCount": 1}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "the betrayer", "StandeeCount": 1},
-					{"Name": "the colorless", "StandeeCount": 1}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "inox bodyguards", "StandeeCount": 2},
-					{"Name": "merciless overseer", "StandeeCount": 1}
-				]
-			},
-			{
-				"Standees": [
-					{"Name": "the sightless eye", "StandeeCount": 1},
-					{"Name": "the gloom", "StandeeCount": 1}
-				]
-			}
-		]
-	}
+  {
+    "Description": [
+      "Bosses"
+    ],
+    "StandeeGroups": [
+      {
+        "Standees": [
+          {
+            "Name": "elder drake",
+            "StandeeCount": 1
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "prime demon",
+            "StandeeCount": 1
+          },
+          {
+            "Name": "captain of the guard",
+            "StandeeCount": 1
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "jekserah",
+            "StandeeCount": 1
+          },
+          {
+            "Name": "dark rider",
+            "StandeeCount": 1
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "winged horror",
+            "StandeeCount": 1
+          },
+          {
+            "Name": "bandit commander",
+            "StandeeCount": 1
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "the betrayer",
+            "StandeeCount": 1
+          },
+          {
+            "Name": "the colorless",
+            "StandeeCount": 1
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "inox bodyguards",
+            "StandeeCount": 2
+          },
+          {
+            "Name": "merciless overseer",
+            "StandeeCount": 1
+          }
+        ]
+      },
+      {
+        "Standees": [
+          {
+            "Name": "the sightless eye",
+            "StandeeCount": 1
+          },
+          {
+            "Name": "the gloom",
+            "StandeeCount": 1
+          }
+        ]
+      }
+    ]
+  }
 ]

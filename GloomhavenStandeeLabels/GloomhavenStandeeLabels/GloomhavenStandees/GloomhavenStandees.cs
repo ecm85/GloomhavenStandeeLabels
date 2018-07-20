@@ -13,8 +13,8 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             var normalStandeeContainers = GloomhavenStandeeDataAccess.GetStandardStandeeContainers();
             var bossStandeeContainers = GloomhavenStandeeDataAccess.GetBossStandeeContainers();
-            var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
-            //var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "HTOWERT.TTF");
+            //var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeui.ttf");
+            var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "HTOWERT.TTF");
             //TODO: Try different fonts
             var boldFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arialbd.ttf");
             var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -22,10 +22,11 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
             var normalStandeeLabels = normalStandeeContainers
                 .Select(container =>
                 {
-                    var containerLabel = new Action<PdfContentByte, Rectangle>((canvas, rectangle) =>
-                    {
-                        //TODO: Add container labels here
-                    });
+                    var containerLabels = container.Description.Select(description => new Action<PdfContentByte, Rectangle>((canvas, rectangle) =>
+                        {
+                            DrawCardText(rectangle, description, canvas, baseFont, rectangle.Width / 2, rectangle.Height / 2, 16f, Element.ALIGN_CENTER);
+                        }))
+                    .ToList();
                     var standeeGroupLabels = container.StandeeGroups
                         .SelectMany(standeeGroup =>
                         {
@@ -33,17 +34,18 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                             var justImageAction = GetImageActionForStandeeGroup(standeeGroup);
                             return new [] {nameWithImageAction, justImageAction};
                         });
-                    return new[] { containerLabel }.Concat(standeeGroupLabels).ToList();
+                    return containerLabels.Concat(standeeGroupLabels).ToList();
                 })
                 .SelectMany(actions => actions)
                 .ToList();
             var bossStandeeLabels = bossStandeeContainers
                 .Select(container =>
                 {
-                    var containerLabel = new Action<PdfContentByte, Rectangle>((canvas, rectangle) =>
-                    {
-                        //TODO: Add container labels here
-                    });
+                    var containerLabels = container.Description.Select(description => new Action<PdfContentByte, Rectangle>((canvas, rectangle) =>
+                        {
+                            DrawCardText(rectangle, description, canvas, baseFont, rectangle.Width / 2, rectangle.Height / 2, 16f, Element.ALIGN_CENTER);
+                        }))
+                        .ToList();
                     var standeeGroupLabels = container.StandeeGroups
                         .SelectMany(standeeGroup =>
                         {
@@ -51,7 +53,7 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
                             var justImageAction = GetImageActionForStandeeGroup(standeeGroup);
                             return new[] { nameWithImageAction, justImageAction };
                         });
-                    return new[] { containerLabel }.Concat(standeeGroupLabels).ToList();
+                    return containerLabels.Concat(standeeGroupLabels).ToList();
                 })
                 .SelectMany(actions => actions)
                 .ToList();
@@ -243,8 +245,8 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
             var firstLineFontSize = GetFontSize(textRectangle, firstDisplayName, canvas, baseFont, 0);
             var secondLineFontSize = GetFontSize(textRectangle, secondDisplayName, canvas, baseFont, 0);
             var fontSize = Math.Min(firstLineFontSize, secondLineFontSize);
-            DrawCardText(textRectangle, firstDisplayName, canvas, baseFont, 0, rectangle.Height / 3, fontSize);
-            DrawCardText(textRectangle, secondDisplayName, canvas, baseFont, 0, 2 * rectangle.Height / 3, fontSize);
+            DrawCardText(textRectangle, firstDisplayName, canvas, baseFont, 0, rectangle.Height / 3 - 2, fontSize);
+            DrawCardText(textRectangle, secondDisplayName, canvas, baseFont, 0, 2 * rectangle.Height / 3 + 2, fontSize);
         }
 
         private static void DrawSingleStandeeNameWithImage(PdfContentByte canvas, Rectangle rectangle, List<Standee> standees, BaseFont baseFont)
@@ -294,11 +296,19 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
             return TextSharpHelpers.DrawImage(rectangle, canvas, imagePath, 0, scaleAbsolute, centerVertically, centerHorizontally);
         }
 
-        private static void DrawCardText(Rectangle rectangle, string name, PdfContentByte canvas, BaseFont baseFont, float xOffset, float yOffset, float fontSize)
+        private static void DrawCardText(
+            Rectangle rectangle,
+            string name,
+            PdfContentByte canvas,
+            BaseFont baseFont,
+            float xOffset,
+            float yOffset,
+            float fontSize,
+            int alignment = Element.ALIGN_LEFT)
         {
             var font = new Font(baseFont, fontSize, Font.NORMAL, BaseColor.BLACK);
             const int textRotation = 0;
-            ColumnText.ShowTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(name, font),
+            ColumnText.ShowTextAligned(canvas, alignment, new Phrase(name, font),
                 rectangle.Left + xOffset + 2, rectangle.Bottom + yOffset - 5, textRotation);
         }
 

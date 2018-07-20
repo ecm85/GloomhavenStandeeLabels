@@ -4,7 +4,7 @@
     {
         static void Main()
         {
-            GloomhavenStandees.GloomhavenStandees.CreateLabels(true);
+            GloomhavenStandees.GloomhavenStandees.CreateLabels(false);
         }
     }
 }
