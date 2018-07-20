@@ -14,10 +14,10 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
             var normalStandeeContainers = GloomhavenStandeeDataAccess.GetStandardStandeeContainers();
             var bossStandeeContainers = GloomhavenStandeeDataAccess.GetBossStandeeContainers();
             //TODO: Boss standees
-            var trajan = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "Arial.ttf");
-            var trajanBold = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arialbd.ttf");
-            var baseFont = BaseFont.CreateFont(trajan, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            var boldBaseFont = BaseFont.CreateFont(trajanBold, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            var fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "HTOWERT.TTF");
+            var boldFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arialbd.ttf");
+            var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            var boldBaseFont = BaseFont.CreateFont(boldFontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             var drawActionRectangles = normalStandeeContainers
                 .Select(container =>
                 {
@@ -97,7 +97,7 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             //TODO: Clean this up
             TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
-            DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas);
+            DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas, true);
         }
 
         private static void DrawTripleStandeeNameWithImage()
@@ -114,13 +114,22 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
         {
             //TODO: Clean this up
             TextSharpHelpers.DrawHollowRectangle(canvas, rectangle, BaseColor.BLACK);
-            DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas);
-            DrawCardText(rectangle, standees.First().DisplayName, canvas, baseFont);
+            var image = DrawNormalStandeeImage(rectangle, standees.First().DisplayName, canvas);
+            DrawCardText(rectangle, standees.First().DisplayName, canvas, baseFont, image.ScaledWidth, rectangle.Height/2);
         }
 
-        private static void DrawNormalStandeeImage(Rectangle rectangle, string name, PdfContentByte canvas)
+        private static Image DrawNormalStandeeImage(
+            Rectangle rectangle,
+            string name,
+            PdfContentByte canvas,
+            bool centerHorizontally = false)
         {
-            DrawImage(rectangle, canvas, $@"GloomhavenStandees\Images\Horz-{name}.png");
+            return DrawImage(
+                rectangle,
+                canvas,
+                $@"GloomhavenStandees\Images\Horz-{name}.png",
+                centerVertically:true,
+                centerHorizontally: centerHorizontally);
         }
 
         private static Image DrawImage(
@@ -134,14 +143,21 @@ namespace GloomhavenStandeeLabels.GloomhavenStandees
             return TextSharpHelpers.DrawImage(rectangle, canvas, imagePath, 0, scaleAbsolute, centerVertically, centerHorizontally);
         }
 
-        private static void DrawCardText(Rectangle rectangle, string name, PdfContentByte canvas, BaseFont baseFont)
+        private static void DrawCardText(Rectangle rectangle, string name, PdfContentByte canvas, BaseFont baseFont, float xOffset, float yOffset)
         {
-            const float maxFontSize = 14f;
-            var font = new Font(baseFont, maxFontSize, Font.NORMAL, BaseColor.BLACK);
+            const float maxFontSize = 16f;
+            var fontSize = TextSharpHelpers.GetFontSize(
+                canvas,
+                name,
+                rectangle.Width - (xOffset + 5),
+                baseFont,
+                maxFontSize,
+                Element.ALIGN_LEFT,
+                Font.NORMAL);
+            var font = new Font(baseFont, fontSize, Font.NORMAL, BaseColor.BLACK);
             const int textRotation = 0;
             ColumnText.ShowTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(name, font),
-                rectangle.Left, rectangle.Bottom,
-                textRotation);
+                rectangle.Left + xOffset + 2, rectangle.Bottom + yOffset - 5, textRotation);
         }
     }
 }
